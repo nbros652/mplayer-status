@@ -55,7 +55,7 @@ getVolume() {
 getSpeed() {
 	speed=$(searchDump "Speed: .+")
 	if [ -z "$speed" ]; then
-		retval="100%"
+		retval="100"
 	else
 		curSpeed=$(tail -n1 <<< "$speed" | awk '{print $3}')
 		retval=$(bc <<< "$curSpeed * 100")
