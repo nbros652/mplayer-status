@@ -12,7 +12,7 @@ Usage
 -----
 By default, the player starts with volume at 50%. This default can be changed by editing my script and changing the value for the `defaultVolume` variable.
 
-To utilize this script, pull it into another bash script by running `eval $(cat mplayer-with-status.sh)`. Then when you play a file from your main script, call use the `playMediaFile` function to start mplayer.
+To utilize this script, pull it into another bash script by running `eval $(cat /path/to/mplayer-with-status.sh)`. Then when you play a file from your main script, use the `playMediaFile` function to start mplayer.
 
 Once playback of a media file has been started, mplayer can be queried by issuing any of the following commands:
  - `getMediaFileName`
