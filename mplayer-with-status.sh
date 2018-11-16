@@ -25,7 +25,7 @@ searchDump() {
 }
 
 getMediaFileName() {
-	searchDump "Playing .+[^.]" | sed 's/Playing //'
+	searchDump "Playing .+[^.]" | sed 's/Playing //' | tail -n1
 }
 
 # get information about the codecs playing everything
