@@ -9,7 +9,15 @@ mplayerDump="/tmp/mplayerDump"
 defaultVolume=50
 
 playMediaFile() {
-	mplayer -slave -input file="$mplayerCmds" -volume $defaultVolume "$1" 2> /dev/null | tee "$mplayerDump"
+	(mplayer -slave -input file="$mplayerCmds" -volume $defaultVolume "$1" < /dev/null 2> /dev/null & echo "PID: $!") > "$mplayerDump"
+}
+
+getPID() {
+	if [ -e "$mplayerDump" ]; then
+		grep PID: "$mplayerDump" | awk '{print $2}'
+	else
+		echo "mplayer not started!" >&2
+	fi
 }
 
 searchDump() {
@@ -36,7 +44,7 @@ getElapsedSeconds() {
 }
 
 # get the timestamp for the current playback position
-getPlaybackTimestamp() {
+getElapsedTimestamp() {
 	getPlaybackPos | awk '{print $3}' | tr -d '()'
 }
 
@@ -79,6 +87,11 @@ isPaused() {
 }
 
 # this function evaluates as a boolean
+# there is a near zero probability that this function returns a false positive. For 
+# it to be incorrect, a new mplayer instance would need to be created without 
+# my playMediaFile function, AND that instance would have to be assigned the
+#same PID as the last terminated instance of mplayer that was started with the
+#playMediaFile function.
 isFinishedPlaying() {
-	searchDump "Exiting..." > /dev/null && return 0 || return 1
+	[[ $(pidof mplayer) =~ $(getPID) ]] && return 1 || return 0
 }
