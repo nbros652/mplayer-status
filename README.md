@@ -20,7 +20,7 @@ Once playback of a media file has been started *using the `playMediaFile` functi
  - `getPID`
  - `getMediaFileName`
  - `getCodecInfo`
- - `getPlaybackTimestamp`
+ - `getElapsedTimestamp`
  - `getElapsedSeconds`
  - `getSpeed`
  - `getVolume`
